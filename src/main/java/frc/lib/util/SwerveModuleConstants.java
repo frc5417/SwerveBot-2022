@@ -3,7 +3,7 @@ package frc.lib.util;
 public class SwerveModuleConstants {
   public final int driveMotorID;
   public final int angleMotorID;
-  public final int cancoderID;
+  public final int pwmID;
   public final double angleOffset;
 
   /**
@@ -11,14 +11,14 @@ public class SwerveModuleConstants {
    *
    * @param driveMotorID
    * @param angleMotorID
-   * @param canCoderID
+   * @param pwmID
    * @param angleOffset
    */
   public SwerveModuleConstants(
-      int driveMotorID, int angleMotorID, int canCoderID, double angleOffset) {
+      int driveMotorID, int angleMotorID, int pwmID, double angleOffset) {
     this.driveMotorID = driveMotorID;
     this.angleMotorID = angleMotorID;
-    this.cancoderID = canCoderID;
+    this.pwmID = pwmID;
     this.angleOffset = angleOffset;
   }
 }

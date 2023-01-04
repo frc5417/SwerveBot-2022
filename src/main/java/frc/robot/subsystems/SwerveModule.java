@@ -9,6 +9,10 @@ import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.AnalogEncoder;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.PWM;
 import frc.lib.math.OnboardModuleState;
 import frc.lib.util.CANCoderUtil;
 import frc.lib.util.CANCoderUtil.CCUsage;
@@ -28,7 +32,7 @@ public class SwerveModule {
 
   private RelativeEncoder driveEncoder;
   private RelativeEncoder integratedAngleEncoder;
-  private CANCoder angleEncoder;
+  private DutyCycleEncoder angleEncoder;
 
   private final SparkMaxPIDController driveController;
   private final SparkMaxPIDController angleController;
@@ -42,7 +46,7 @@ public class SwerveModule {
     angleOffset = moduleConstants.angleOffset;
 
     /* Angle Encoder Config */
-    angleEncoder = new CANCoder(moduleConstants.cancoderID);
+    angleEncoder = new DutyCycleEncoder(moduleConstants.pwmID);
     configAngleEncoder();
 
     /* Angle Motor Config */
@@ -58,6 +62,8 @@ public class SwerveModule {
     configDriveMotor();
 
     lastAngle = getState().angle.getDegrees();
+
+    resetToAbsolute();
   }
 
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
@@ -68,14 +74,14 @@ public class SwerveModule {
     // continuous controller which REV and CTRE are not
 
     if (isOpenLoop) {
-      double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
-      driveMotor.set(percentOutput);
+      // double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
+      // driveMotor.set(percentOutput);
     } else {
-      driveController.setReference(
-          desiredState.speedMetersPerSecond,
-          ControlType.kVelocity,
-          0,
-          feedforward.calculate(desiredState.speedMetersPerSecond));
+      // driveController.setReference(
+      //     desiredState.speedMetersPerSecond,
+      //     ControlType.kVelocity,
+      //     0,
+      //     feedforward.calculate(desiredState.speedMetersPerSecond));
     }
 
     double angle =
@@ -94,9 +100,7 @@ public class SwerveModule {
   }
 
   private void configAngleEncoder() {
-    angleEncoder.configFactoryDefault();
-    CANCoderUtil.setCANCoderBusUsage(angleEncoder, CCUsage.kMinimal);
-    angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+    
   }
 
   private void configAngleMotor() {
@@ -131,12 +135,14 @@ public class SwerveModule {
   }
 
   public Rotation2d getCanCoder() {
-    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+    System.out.println("angleEncoder[" + this.moduleNumber + "].getAbsolutePosition(): " + angleEncoder.getAbsolutePosition());
+    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition() * 360);
   }
 
   public SwerveModuleState getState() {
     double velocity = driveEncoder.getVelocity();
     Rotation2d angle = Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
+    // System.out.println("angleIntegrated[" + this.moduleNumber + "] " + angle.getDegrees());
     return new SwerveModuleState(velocity, angle);
   }
 }

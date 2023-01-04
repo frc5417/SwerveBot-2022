@@ -19,7 +19,6 @@ public class Swerve extends SubsystemBase {
 
   public Swerve() {
     gyro = new AHRS(Constants.Swerve.pigeonID);
-    gyro.configFactoryDefault();
     zeroGyro();
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw());
