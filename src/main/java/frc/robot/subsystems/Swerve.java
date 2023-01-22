@@ -33,18 +33,33 @@ public class Swerve extends SubsystemBase {
           new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
 
+        //old, don't use
       /*angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(90.0),
         Rotation2d.fromDegrees(270.0),
         Rotation2d.fromDegrees(140.0),
         Rotation2d.fromDegrees(125.0)
       };*/
+
       angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(8.0)
+        Rotation2d.fromDegrees(225.0),
+        Rotation2d.fromDegrees(45.0),
+        Rotation2d.fromDegrees(225.0),
+        Rotation2d.fromDegrees(45.0)
       };
+      /*angleOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(280.0),
+        Rotation2d.fromDegrees(180.0),
+        Rotation2d.fromDegrees(272.0),
+        Rotation2d.fromDegrees(340.0)
+      };*/
+      //latest - 1/21, 3:12 PM
+      /*angleOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(100.0),
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(272.0),
+        Rotation2d.fromDegrees(260.0)
+      };*/
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(),
     new SwerveModulePosition[] {
@@ -64,10 +79,22 @@ public class Swerve extends SubsystemBase {
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(
                     translation.getX(), translation.getY(), rotation, getYaw())
                 : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
+    /*SwerveModuleState[] swerveModuleStates =
+      Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+          ChassisSpeeds.fromFieldRelativeSpeeds(1.0, 1.0, rotation, getYaw()));*/
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
     //String text = "";
     for (SwerveModule mod : mSwerveMods) {
       Rotation2d currentAngle = swerveModuleStates[mod.moduleNumber].angle;
+
+      //Manually adjust angle of weird swerve modules if rotating
+      if (mod.moduleNumber == 0 || mod.moduleNumber == 1) {
+        //System.out.println("rotation val: "+rotation);
+        if (rotation > 0.0) {
+          currentAngle.plus(Rotation2d.fromDegrees(90.0));
+        }
+      }
+      
       swerveModuleStates[mod.moduleNumber].angle = currentAngle.plus(angleOffsets[mod.moduleNumber]);
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
       //text += Integer.toString(mod.moduleNumber);

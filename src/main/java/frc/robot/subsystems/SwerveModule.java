@@ -75,14 +75,14 @@ public class SwerveModule {
     // continuous controller which REV and CTRE are not
 
     if (isOpenLoop) {
-      // double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
-      // driveMotor.set(percentOutput);
+      double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
+      driveMotor.set(percentOutput);
     } else {
-      // driveController.setReference(
-      //     desiredState.speedMetersPerSecond,
-      //     ControlType.kVelocity,
-      //     0,
-      //     feedforward.calculate(desiredState.speedMetersPerSecond));
+      driveController.setReference(
+          desiredState.speedMetersPerSecond,
+          ControlType.kVelocity,
+          0,
+          feedforward.calculate(desiredState.speedMetersPerSecond));
     }
 
     double angle =

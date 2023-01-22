@@ -39,12 +39,18 @@ public class TeleopSwerve extends CommandBase {
         MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband) * 0.5;
     double rotationVal =
         MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.Swerve.stickDeadband) * 0.5;
-
+        
     /* Drive */
     s_Swerve.drive(
         new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
         rotationVal * Constants.Swerve.maxAngularVelocity,
         !robotCentricSup.getAsBoolean(),
         true);
+    
+    /*s_Swerve.drive(
+        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
+        rotationVal * Constants.Swerve.maxAngularVelocity,
+        true,
+        true);*/
   }
 }
