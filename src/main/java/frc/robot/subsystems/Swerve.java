@@ -18,12 +18,20 @@ public class Swerve extends SubsystemBase {
   public SwerveModule[] mSwerveMods;
   public AHRS gyro;
 
+  //testing, just to see the value for now
+  public double targetRotation;
+
   //testing for now, bad practice boo :(
   public Rotation2d[] angleOffsets;
+  private Boolean firstRotate = true;
+  public Rotation2d[] rotationOffsets;
 
   public Swerve() {
     gyro = new AHRS(Constants.Swerve.pigeonID);
     zeroGyro();
+
+    //testing, just to see the value for now
+    targetRotation = 0.0;
 
     mSwerveMods =
         new SwerveModule[] {
@@ -40,19 +48,20 @@ public class Swerve extends SubsystemBase {
         Rotation2d.fromDegrees(140.0),
         Rotation2d.fromDegrees(125.0)
       };*/
-
-      angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(225.0),
-        Rotation2d.fromDegrees(45.0),
-        Rotation2d.fromDegrees(225.0),
-        Rotation2d.fromDegrees(45.0)
-      };
       /*angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(280.0),
         Rotation2d.fromDegrees(180.0),
         Rotation2d.fromDegrees(272.0),
         Rotation2d.fromDegrees(340.0)
       };*/
+      //second latest one- as of 1/23, 4:52 PM
+      angleOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(165.0),
+        Rotation2d.fromDegrees(170.0),
+        Rotation2d.fromDegrees(170.0),
+        Rotation2d.fromDegrees(338.0)
+      };
+      
       //latest - 1/21, 3:12 PM
       /*angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(100.0),
@@ -60,6 +69,20 @@ public class Swerve extends SubsystemBase {
         Rotation2d.fromDegrees(272.0),
         Rotation2d.fromDegrees(260.0)
       };*/
+
+      /*angleOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(0.0)
+      };*/
+
+      rotationOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(90.0),
+        Rotation2d.fromDegrees(270.0),
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(0.0)
+      };
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(),
     new SwerveModulePosition[] {
@@ -73,34 +96,30 @@ public class Swerve extends SubsystemBase {
 
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+        targetRotation = rotation;
     SwerveModuleState[] swerveModuleStates =
         Constants.Swerve.swerveKinematics.toSwerveModuleStates(
             fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(
                     translation.getX(), translation.getY(), rotation, getYaw())
                 : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
-    /*SwerveModuleState[] swerveModuleStates =
-      Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-          ChassisSpeeds.fromFieldRelativeSpeeds(1.0, 1.0, rotation, getYaw()));*/
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
-    //String text = "";
+
     for (SwerveModule mod : mSwerveMods) {
       Rotation2d currentAngle = swerveModuleStates[mod.moduleNumber].angle;
+      currentAngle = currentAngle.plus(angleOffsets[mod.moduleNumber]);
+      currentAngle = currentAngle.plus(rotationOffsets[mod.moduleNumber]);
 
       //Manually adjust angle of weird swerve modules if rotating
-      if (mod.moduleNumber == 0 || mod.moduleNumber == 1) {
-        //System.out.println("rotation val: "+rotation);
-        if (rotation > 0.0) {
-          currentAngle.plus(Rotation2d.fromDegrees(90.0));
-        }
-      }
+      /*if ((rotation > 0.0 || rotation < 0.0) && firstRotate) {
+        System.out.println("Rotate!");
+        currentAngle = currentAngle.plus(rotationOffsets[mod.moduleNumber]);
+        firstRotate = false;
+      } else { firstRotate = true; }*/
       
-      swerveModuleStates[mod.moduleNumber].angle = currentAngle.plus(angleOffsets[mod.moduleNumber]);
+      swerveModuleStates[mod.moduleNumber].angle = currentAngle;
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
-      //text += Integer.toString(mod.moduleNumber);
-      //text += currentAngle.plus(angleOffsets[mod.moduleNumber]);
     }
-    //System.out.println("swerve states: "+text);
   }
 
   /* Used by SwerveControllerCommand in Auto */
@@ -158,13 +177,15 @@ public class Swerve extends SubsystemBase {
       mSwerveMods[3].getPosition()
     });
 
-    for (SwerveModule mod : mSwerveMods) {
-      SmartDashboard.putNumber(
+    /*for (SwerveModule mod : mSwerveMods) {
+      /*SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
       SmartDashboard.putNumber(
-          "Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
+          "Mod " + mod.moduleNumber + " Degrees", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-    }
+      System.out.println(mod.moduleNumber + " Degrees: "+mod.getState().angle.getDegrees()+" Target Rotation: "+targetRotation);
+    }*/
+    
   }
 }
