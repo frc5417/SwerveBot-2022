@@ -59,6 +59,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     driver.y().onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    driver.a().onTrue(new InstantCommand(() -> s_Swerve.flip180()));
   }
 
   /**

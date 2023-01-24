@@ -23,8 +23,9 @@ public class Swerve extends SubsystemBase {
 
   //testing for now, bad practice boo :(
   public Rotation2d[] angleOffsets;
-  private Boolean firstRotate = true;
   public Rotation2d[] rotationOffsets;
+  public Rotation2d currentAngle;
+  private Rotation2d oneEightyDegree;
 
   public Swerve() {
     gyro = new AHRS(Constants.Swerve.pigeonID);
@@ -32,6 +33,8 @@ public class Swerve extends SubsystemBase {
 
     //testing, just to see the value for now
     targetRotation = 0.0;
+    currentAngle = Rotation2d.fromDegrees(0.0);
+    oneEightyDegree = Rotation2d.fromDegrees(0.0);
 
     mSwerveMods =
         new SwerveModule[] {
@@ -54,15 +57,22 @@ public class Swerve extends SubsystemBase {
         Rotation2d.fromDegrees(272.0),
         Rotation2d.fromDegrees(340.0)
       };*/
-      //second latest one- as of 1/23, 4:52 PM
+
+      //latest- as of 1/24, 9:40 AM
       angleOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(93.0),
+        Rotation2d.fromDegrees(97.0),
+        Rotation2d.fromDegrees(181.0),
+        Rotation2d.fromDegrees(225.0)
+      };
+      //1/23, 4:52 PM
+      /*angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(165.0),
         Rotation2d.fromDegrees(170.0),
         Rotation2d.fromDegrees(170.0),
         Rotation2d.fromDegrees(338.0)
-      };
-      
-      //latest - 1/21, 3:12 PM
+      };*/
+      //1/21, 3:12 PM
       /*angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(100.0),
         Rotation2d.fromDegrees(0.0),
@@ -77,11 +87,17 @@ public class Swerve extends SubsystemBase {
         Rotation2d.fromDegrees(0.0)
       };*/
 
-      rotationOffsets = new Rotation2d[] {
+      /*rotationOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(90.0),
         Rotation2d.fromDegrees(270.0),
         Rotation2d.fromDegrees(0.0),
         Rotation2d.fromDegrees(0.0)
+      };*/
+      rotationOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(270.0),
+        Rotation2d.fromDegrees(90.0),
+        Rotation2d.fromDegrees(180.0),
+        Rotation2d.fromDegrees(180.0)
       };
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(),
@@ -97,29 +113,34 @@ public class Swerve extends SubsystemBase {
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         targetRotation = rotation;
+        boolean newFieldValue = false;
     SwerveModuleState[] swerveModuleStates =
         Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-            fieldRelative
+          newFieldValue
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(
                     translation.getX(), translation.getY(), rotation, getYaw())
                 : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
     for (SwerveModule mod : mSwerveMods) {
-      Rotation2d currentAngle = swerveModuleStates[mod.moduleNumber].angle;
+      currentAngle = swerveModuleStates[mod.moduleNumber].angle;
       currentAngle = currentAngle.plus(angleOffsets[mod.moduleNumber]);
-      currentAngle = currentAngle.plus(rotationOffsets[mod.moduleNumber]);
 
-      //Manually adjust angle of weird swerve modules if rotating
-      /*if ((rotation > 0.0 || rotation < 0.0) && firstRotate) {
-        System.out.println("Rotate!");
+      if ((rotation > 0.0 || rotation < 0.0)) {
         currentAngle = currentAngle.plus(rotationOffsets[mod.moduleNumber]);
-        firstRotate = false;
-      } else { firstRotate = true; }*/
+      }
+
+      currentAngle = currentAngle.plus(oneEightyDegree);
       
       swerveModuleStates[mod.moduleNumber].angle = currentAngle;
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
     }
+  }
+
+  public void flip180() { //come back to
+    if (oneEightyDegree.getDegrees() == 180.0) {
+      oneEightyDegree = Rotation2d.fromDegrees(0.0);
+    } else { oneEightyDegree = Rotation2d.fromDegrees(180.0); }
   }
 
   /* Used by SwerveControllerCommand in Auto */
