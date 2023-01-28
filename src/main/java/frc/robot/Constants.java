@@ -75,7 +75,7 @@ public final class Constants {
     public static final IdleMode driveNeutralMode = IdleMode.kBrake;
 
     /* Motor Inverts */
-    public static final boolean driveInvert = true;
+    public static final boolean driveInvert = false;
     public static final boolean angleInvert = false;
 
     /* Angle Encoder Invert */
@@ -83,7 +83,7 @@ public final class Constants {
 
     /* Module Specific Constants */
     /* Front Left Module - Module 0 */
-    public static final class Mod0 {
+    public static final class Mod1 {
       public static final int driveMotorID = 11;
       public static final int angleMotorID = 10;
       public static final int pwmID = 0;
@@ -93,7 +93,7 @@ public final class Constants {
     }
 
     /* Front Right Module - Module 1 */
-    public static final class Mod1 {
+    public static final class Mod0 {
       public static final int driveMotorID = 21;
       public static final int angleMotorID = 20;
       public static final int pwmID = 1;

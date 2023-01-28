@@ -80,9 +80,9 @@ public class Swerve extends SubsystemBase {
 
       angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(180.0),
+        Rotation2d.fromDegrees(0.0),
         Rotation2d.fromDegrees(0.0), //180
-        Rotation2d.fromDegrees(180.0)
+        Rotation2d.fromDegrees(0.0)
       };
 
 
@@ -143,10 +143,10 @@ public class Swerve extends SubsystemBase {
       // };
 
       rotationOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(270.0),
-        Rotation2d.fromDegrees(90.0),
-        Rotation2d.fromDegrees(180.0), //180
-        Rotation2d.fromDegrees(180.0)
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(0.0), //180
+        Rotation2d.fromDegrees(0.0)
       };
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(),
@@ -247,15 +247,15 @@ public class Swerve extends SubsystemBase {
       mSwerveMods[3].getPosition()
     });
 
-    /*for (SwerveModule mod : mSwerveMods) {
-      /*SmartDashboard.putNumber(
+    for (SwerveModule mod : mSwerveMods) {
+      SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Degrees", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
       System.out.println(mod.moduleNumber + " Degrees: "+mod.getState().angle.getDegrees()+" Target Rotation: "+targetRotation);
-    }*/
+    }
     
   }
 }

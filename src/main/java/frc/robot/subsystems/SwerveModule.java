@@ -64,7 +64,7 @@ public class SwerveModule {
 
     lastAngle = getState().angle.getDegrees();
 
-    // resetToAbsolute();
+    resetToAbsolute();
   }
 
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
@@ -143,8 +143,10 @@ public class SwerveModule {
   }
 
   public Rotation2d getCanCoder() {
-    // System.out.println("angleEncoder[" + this.moduleNumber + "].getAbsolutePosition(): " + angleEncoder.getAbsolutePosition());
-    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition() * 360);
+    if(this.moduleNumber == 0){
+      System.out.println("angleEncoder[" + this.moduleNumber + "].getAbsolutePosition(): " + angleEncoder.getAbsolutePosition());
+    }
+      return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition() * 360);
   }
 
   public SwerveModuleState getState() {
