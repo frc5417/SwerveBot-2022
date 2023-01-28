@@ -59,12 +59,42 @@ public class Swerve extends SubsystemBase {
       };*/
 
       //latest- as of 1/24, 9:40 AM
+      // angleOffsets = new Rotation2d[] {
+      //   Rotation2d.fromDegrees(0.0),
+      //   Rotation2d.fromDegrees(315.0),
+      //   Rotation2d.fromDegrees(315.0),
+      //   Rotation2d.fromDegrees(315.0)
+      // };
+
+
+
+
+
+      //Robo-centric
+      // angleOffsets = new Rotation2d[] {
+      //   Rotation2d.fromDegrees(0.0),
+      //   Rotation2d.fromDegrees(0.0),
+      //   Rotation2d.fromDegrees(180.0), //180
+      //   Rotation2d.fromDegrees(0.0)
+      // };
+
       angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(93.0),
-        Rotation2d.fromDegrees(97.0),
-        Rotation2d.fromDegrees(181.0),
-        Rotation2d.fromDegrees(225.0)
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(180.0),
+        Rotation2d.fromDegrees(0.0), //180
+        Rotation2d.fromDegrees(180.0)
       };
+
+
+
+
+
+
+
+
+
+
+
       //1/23, 4:52 PM
       /*angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(165.0),
@@ -93,10 +123,29 @@ public class Swerve extends SubsystemBase {
         Rotation2d.fromDegrees(0.0),
         Rotation2d.fromDegrees(0.0)
       };*/
+      // rotationOffsets = new Rotation2d[] {
+      //   Rotation2d.fromDegrees(270.0),
+      //   Rotation2d.fromDegrees(90.0),
+      //   Rotation2d.fromDegrees(180.0),
+      //   Rotation2d.fromDegrees(180.0)
+      // };
+
+
+
+
+
+      //Robo-centric
+      // rotationOffsets = new Rotation2d[] {
+      //   Rotation2d.fromDegrees(270.0),
+      //   Rotation2d.fromDegrees(90.0),
+      //   Rotation2d.fromDegrees(180.0),
+      //   Rotation2d.fromDegrees(180.0)
+      // };
+
       rotationOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(270.0),
         Rotation2d.fromDegrees(90.0),
-        Rotation2d.fromDegrees(180.0),
+        Rotation2d.fromDegrees(180.0), //180
         Rotation2d.fromDegrees(180.0)
       };
 
@@ -113,7 +162,7 @@ public class Swerve extends SubsystemBase {
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         targetRotation = rotation;
-        boolean newFieldValue = false;
+        boolean newFieldValue = true;
     SwerveModuleState[] swerveModuleStates =
         Constants.Swerve.swerveKinematics.toSwerveModuleStates(
           newFieldValue
