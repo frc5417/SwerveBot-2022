@@ -82,7 +82,7 @@ public class Swerve extends SubsystemBase {
         Rotation2d.fromDegrees(0.0),
         Rotation2d.fromDegrees(0.0),
         Rotation2d.fromDegrees(0.0), //180
-        Rotation2d.fromDegrees(0.0)
+        Rotation2d.fromDegrees(180.0)
       };
 
 
@@ -141,12 +141,19 @@ public class Swerve extends SubsystemBase {
       //   Rotation2d.fromDegrees(180.0),
       //   Rotation2d.fromDegrees(180.0)
       // };
-
+/*
       rotationOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(0.0), //180
-        Rotation2d.fromDegrees(0.0)
+        Rotation2d.fromDegrees(90.0),
+        Rotation2d.fromDegrees(90.0),
+        Rotation2d.fromDegrees(270.0), //180
+        Rotation2d.fromDegrees(270.0)
+      };
+      */
+      rotationOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(-90.0),
+        Rotation2d.fromDegrees(90.0),
+        Rotation2d.fromDegrees(180.0), //180
+        Rotation2d.fromDegrees(180.0)
       };
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(),
@@ -173,10 +180,10 @@ public class Swerve extends SubsystemBase {
 
     for (SwerveModule mod : mSwerveMods) {
       currentAngle = swerveModuleStates[mod.moduleNumber].angle;
-      currentAngle = currentAngle.plus(angleOffsets[mod.moduleNumber]);
+        currentAngle = currentAngle.plus(angleOffsets[mod.moduleNumber]);
 
       if ((rotation > 0.0 || rotation < 0.0)) {
-        currentAngle = currentAngle.plus(rotationOffsets[mod.moduleNumber]);
+        currentAngle = currentAngle.plus(rotationOffsets[mod.moduleNumber]); 
       }
 
       currentAngle = currentAngle.plus(oneEightyDegree);

@@ -67,8 +67,8 @@ public final class Constants {
     public static final double angleConversionFactor = 360.0 / 12.8;
 
     /* Swerve Profiling Values */
-    public static final double maxSpeed = 4.5; // meters per second
-    public static final double maxAngularVelocity = 11.5;
+    public static final double maxSpeed = 2.5; //4.5; // meters per second
+    public static final double maxAngularVelocity = 5.0; //11.5;
 
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;
@@ -83,7 +83,8 @@ public final class Constants {
 
     /* Module Specific Constants */
     /* Front Left Module - Module 0 */
-    public static final class Mod1 {
+    //Called 1 on the robot
+    public static final class Mod0 {
       public static final int driveMotorID = 11;
       public static final int angleMotorID = 10;
       public static final int pwmID = 0;
@@ -93,7 +94,8 @@ public final class Constants {
     }
 
     /* Front Right Module - Module 1 */
-    public static final class Mod0 {
+    //Called 2 on the robot
+    public static final class Mod1 {
       public static final int driveMotorID = 21;
       public static final int angleMotorID = 20;
       public static final int pwmID = 1;
@@ -103,6 +105,7 @@ public final class Constants {
     }
 
     /* Back Left Module - Module 2 */
+    //Called 3 on the robot
     public static final class Mod2 {
       public static final int driveMotorID = 31;
       public static final int angleMotorID = 30;
@@ -113,6 +116,7 @@ public final class Constants {
     }
 
     /* Back Right Module - Module 3 */
+    //Called 4 on the robot
     public static final class Mod3 {
       public static final int driveMotorID = 40;
       public static final int angleMotorID = 41;
