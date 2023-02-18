@@ -58,13 +58,20 @@ public class Swerve extends SubsystemBase {
         Rotation2d.fromDegrees(340.0)
       };*/
 
-      //latest- as of 1/24, 9:40 AM
       angleOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(19.0),
+        Rotation2d.fromDegrees(27.0),
+        Rotation2d.fromDegrees(23.0),
+        Rotation2d.fromDegrees(26.0)
+      };
+
+      //latest- as of 1/24, 9:40 AM
+      /*angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(93.0),
         Rotation2d.fromDegrees(97.0),
         Rotation2d.fromDegrees(181.0),
         Rotation2d.fromDegrees(225.0)
-      };
+      };*/
       //1/23, 4:52 PM
       /*angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(165.0),
@@ -97,7 +104,7 @@ public class Swerve extends SubsystemBase {
         Rotation2d.fromDegrees(270.0),
         Rotation2d.fromDegrees(90.0),
         Rotation2d.fromDegrees(180.0),
-        Rotation2d.fromDegrees(180.0)
+        Rotation2d.fromDegrees(0.0)
       };
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(),
