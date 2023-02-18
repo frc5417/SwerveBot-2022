@@ -103,6 +103,7 @@ public class SwerveModule {
 
   public void resetToAbsolute() {
     double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
+    // System.out.println("angleEncoder[" + this.moduleNumber + "] Computed Pos: " + absolutePosition);
     integratedAngleEncoder.setPosition(absolutePosition);
   }
 
@@ -142,13 +143,16 @@ public class SwerveModule {
   }
 
   public Rotation2d getCanCoder() {
-    System.out.println("angleEncoder[" + this.moduleNumber + "].getAbsolutePosition(): " + angleEncoder.getAbsolutePosition());
-    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition() * 360);
+    if(this.moduleNumber == 0){
+      System.out.println("angleEncoder[" + this.moduleNumber + "].getAbsolutePosition(): " + angleEncoder.getAbsolutePosition());
+    }
+      return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition() * 360);
   }
 
   public SwerveModuleState getState() {
     double velocity = driveEncoder.getVelocity();
-    Rotation2d angle = Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
+    // Rotation2d angle = Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
+    Rotation2d angle = Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
     // System.out.println("angleIntegrated[" + this.moduleNumber + "] " + angle.getDegrees());
     return new SwerveModuleState(velocity, angle);
   }
