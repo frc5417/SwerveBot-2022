@@ -58,22 +58,6 @@ public class Swerve extends SubsystemBase {
         Rotation2d.fromDegrees(340.0)
       };*/
 
-<<<<<<< HEAD
-      angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(19.0),
-        Rotation2d.fromDegrees(27.0),
-        Rotation2d.fromDegrees(23.0),
-        Rotation2d.fromDegrees(26.0)
-      };
-
-      //latest- as of 1/24, 9:40 AM
-      /*angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(93.0),
-        Rotation2d.fromDegrees(97.0),
-        Rotation2d.fromDegrees(181.0),
-        Rotation2d.fromDegrees(225.0)
-      };*/
-=======
       //latest- as of 1/24, 9:40 AM
       // angleOffsets = new Rotation2d[] {
       //   Rotation2d.fromDegrees(0.0),
@@ -102,10 +86,10 @@ public class Swerve extends SubsystemBase {
       };
       */
       angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(318.0),
-        Rotation2d.fromDegrees(310.0),
-        Rotation2d.fromDegrees(260.0), //180
-        Rotation2d.fromDegrees(145.0)
+        Rotation2d.fromDegrees(178.0),
+        Rotation2d.fromDegrees(175.0),
+        Rotation2d.fromDegrees(181.0), //180
+        Rotation2d.fromDegrees(360.0)
       };
 
 
@@ -118,7 +102,6 @@ public class Swerve extends SubsystemBase {
 
 
 
->>>>>>> fa3ca2a1d8d8bb44772089be5ee489d7b535da69
       //1/23, 4:52 PM
       /*angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(165.0),
@@ -168,21 +151,16 @@ public class Swerve extends SubsystemBase {
 /*
       rotationOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(90.0),
-<<<<<<< HEAD
-        Rotation2d.fromDegrees(180.0),
-        Rotation2d.fromDegrees(0.0)
-=======
         Rotation2d.fromDegrees(90.0),
         Rotation2d.fromDegrees(270.0), //180
         Rotation2d.fromDegrees(270.0)
       };
       */
       rotationOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(-90.0),
         Rotation2d.fromDegrees(90.0),
-        Rotation2d.fromDegrees(180.0), //180
-        Rotation2d.fromDegrees(180.0)
->>>>>>> fa3ca2a1d8d8bb44772089be5ee489d7b535da69
+        Rotation2d.fromDegrees(270.0),
+        Rotation2d.fromDegrees(0.0), //180
+        Rotation2d.fromDegrees(0.0)
       };
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(),
