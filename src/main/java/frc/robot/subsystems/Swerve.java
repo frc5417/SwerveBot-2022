@@ -45,34 +45,36 @@ public class Swerve extends SubsystemBase {
         };
 
       //Robo-centric
-      // angleOffsets = new Rotation2d[] {
-      //   Rotation2d.fromDegrees(0.0),
-      //   Rotation2d.fromDegrees(0.0),
-      //   Rotation2d.fromDegrees(180.0), //180
-      //   Rotation2d.fromDegrees(0.0)
-      // };
-      
+      angleOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(0.0),
+        Rotation2d.fromDegrees(180.0), //180
+        Rotation2d.fromDegrees(0.0)
+      };
+      /*
       angleOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(110.0),
         Rotation2d.fromDegrees(125.0),
         Rotation2d.fromDegrees(291.0), //180
         Rotation2d.fromDegrees(100.0)
       };
+      */
 
       //Robo-centric
-      // rotationOffsets = new Rotation2d[] {
-      //   Rotation2d.fromDegrees(270.0),
-      //   Rotation2d.fromDegrees(90.0),
-      //   Rotation2d.fromDegrees(180.0),
-      //   Rotation2d.fromDegrees(180.0)
-      // };
-
+      rotationOffsets = new Rotation2d[] {
+        Rotation2d.fromDegrees(270.0),
+        Rotation2d.fromDegrees(90.0),
+        Rotation2d.fromDegrees(180.0),
+        Rotation2d.fromDegrees(180.0)
+      };
+      /*
       rotationOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(90.0),
         Rotation2d.fromDegrees(270.0),
         Rotation2d.fromDegrees(0.0), //180
         Rotation2d.fromDegrees(0.0)
       };
+      */
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(),
     new SwerveModulePosition[] {
