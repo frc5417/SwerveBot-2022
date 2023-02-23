@@ -44,32 +44,6 @@ public class Swerve extends SubsystemBase {
           new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
 
-        //old, don't use
-      /*angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(90.0),
-        Rotation2d.fromDegrees(270.0),
-        Rotation2d.fromDegrees(140.0),
-        Rotation2d.fromDegrees(125.0)
-      };*/
-      /*angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(280.0),
-        Rotation2d.fromDegrees(180.0),
-        Rotation2d.fromDegrees(272.0),
-        Rotation2d.fromDegrees(340.0)
-      };*/
-
-      //latest- as of 1/24, 9:40 AM
-      // angleOffsets = new Rotation2d[] {
-      //   Rotation2d.fromDegrees(0.0),
-      //   Rotation2d.fromDegrees(315.0),
-      //   Rotation2d.fromDegrees(315.0),
-      //   Rotation2d.fromDegrees(315.0)
-      // };
-
-
-
-
-
       //Robo-centric
       // angleOffsets = new Rotation2d[] {
       //   Rotation2d.fromDegrees(0.0),
@@ -77,69 +51,13 @@ public class Swerve extends SubsystemBase {
       //   Rotation2d.fromDegrees(180.0), //180
       //   Rotation2d.fromDegrees(0.0)
       // };
-/*
+      
       angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(340.0),
-        Rotation2d.fromDegrees(340.0),
-        Rotation2d.fromDegrees(340.0), //180
-        Rotation2d.fromDegrees(160.0)
+        Rotation2d.fromDegrees(110.0),
+        Rotation2d.fromDegrees(125.0),
+        Rotation2d.fromDegrees(291.0), //180
+        Rotation2d.fromDegrees(100.0)
       };
-      */
-      angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(178.0),
-        Rotation2d.fromDegrees(175.0),
-        Rotation2d.fromDegrees(181.0), //180
-        Rotation2d.fromDegrees(360.0)
-      };
-
-
-
-
-
-
-
-
-
-
-
-      //1/23, 4:52 PM
-      /*angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(165.0),
-        Rotation2d.fromDegrees(170.0),
-        Rotation2d.fromDegrees(170.0),
-        Rotation2d.fromDegrees(338.0)
-      };*/
-      //1/21, 3:12 PM
-      /*angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(100.0),
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(272.0),
-        Rotation2d.fromDegrees(260.0)
-      };*/
-
-      /*angleOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(0.0)
-      };*/
-
-      /*rotationOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(90.0),
-        Rotation2d.fromDegrees(270.0),
-        Rotation2d.fromDegrees(0.0),
-        Rotation2d.fromDegrees(0.0)
-      };*/
-      // rotationOffsets = new Rotation2d[] {
-      //   Rotation2d.fromDegrees(270.0),
-      //   Rotation2d.fromDegrees(90.0),
-      //   Rotation2d.fromDegrees(180.0),
-      //   Rotation2d.fromDegrees(180.0)
-      // };
-
-
-
-
 
       //Robo-centric
       // rotationOffsets = new Rotation2d[] {
@@ -148,14 +66,7 @@ public class Swerve extends SubsystemBase {
       //   Rotation2d.fromDegrees(180.0),
       //   Rotation2d.fromDegrees(180.0)
       // };
-/*
-      rotationOffsets = new Rotation2d[] {
-        Rotation2d.fromDegrees(90.0),
-        Rotation2d.fromDegrees(90.0),
-        Rotation2d.fromDegrees(270.0), //180
-        Rotation2d.fromDegrees(270.0)
-      };
-      */
+
       rotationOffsets = new Rotation2d[] {
         Rotation2d.fromDegrees(90.0),
         Rotation2d.fromDegrees(270.0),
@@ -176,7 +87,7 @@ public class Swerve extends SubsystemBase {
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         targetRotation = rotation;
-        boolean newFieldValue = true;
+        boolean newFieldValue = false; //robo centric or field centric
     SwerveModuleState[] swerveModuleStates =
         Constants.Swerve.swerveKinematics.toSwerveModuleStates(
           newFieldValue
